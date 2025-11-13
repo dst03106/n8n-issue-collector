@@ -20,7 +20,7 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        run: npm ci || echo "No dependencies"
+        run: npm ci && cd community_nodes && npm ci
 
       - name: Run workflow
         env:
@@ -38,18 +38,19 @@ jobs:
                   "host": "https://generativelanguage.googleapis.com"
                 }
             },
-            {
-                "id": "gmailOAuth2",
-                "name": "Gmail account",
-                "type": "gmailOAuth2",
+             {
+                "id": "MailtrapTokenApi",
+                "name": "Mailtrap Token Api account",
+                "type": "MailtrapTokenApi",
                 "data": {
-                    "clientId": "${{ secrets.GMAIL_OAUTH2_CLIENT_ID }}",
-                    "clientSecret": "${{ secrets.GMAIL_OAUTH2_CLIENT_SECRET }}"
+                    "apiToken": "${{ secrets.MAILTRAP_API_TOKEN }}"
                 }
-            }
+              }
           ] 
           EOF
           npx n8n import:credentials --input="cred.json"
+          echo $PWD
+          ln -sf $PWD/community_nodes ~/.n8n/nodes
           npx n8n import:workflow --input="./.github/workflows/test.json"
           WORKFLOW_ID=$(sqlite3 ~/.n8n/database.sqlite "SELECT id FROM workflow_entity ORDER BY createdAt DESC LIMIT 1;")
           npx n8n execute workflow --id $WORKFLOW_ID

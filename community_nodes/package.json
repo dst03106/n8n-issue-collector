@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "n8n-nodes-mailtrap": "^1.1.4"
+  }
+}
