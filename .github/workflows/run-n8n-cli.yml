@@ -26,6 +26,10 @@ jobs:
         env:
           N8N_LOG_LEVEL: "error"
           NODE_FUNCTION_ALLOW_EXTERNAL: "yaml,mjml"
+          OPENROUTER_MODEL: "google/gemini-2.0-flash-exp:free"
+          OPENROUTER_FALLBACK_MODEL: "qwen/qwen3-coder:free"
+          REPO: ${{ vars.REPO }}
+          EMAIL: ${{ vars.EMAIL }}
         run: |
           cat << 'EOF' > cred.json
           [
@@ -57,8 +61,8 @@ jobs:
           ] 
           EOF
           npx n8n import:credentials --input="cred.json"
-          echo $PWD
+          node scripts/build-workflow.js n8n.json
           ln -sf $PWD/community_nodes ~/.n8n/nodes
-          npx n8n import:workflow --input="./.github/workflows/n8n.json"
+          npx n8n import:workflow --input="./dist/workflow.json"
           WORKFLOW_ID=$(sqlite3 ~/.n8n/database.sqlite "SELECT id FROM workflow_entity ORDER BY createdAt DESC LIMIT 1;")
           npx n8n execute workflow --id $WORKFLOW_ID

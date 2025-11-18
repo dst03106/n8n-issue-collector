@@ -1,0 +1,306 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": ""
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        112,
+        1120
+      ],
+      "id": "99abf255-7f65-4772-8bf1-90cf499a0b65",
+      "name": "Convert Markdown"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        1120
+      ],
+      "id": "9d915cd3-9077-4308-b9f0-b6fc759c1441",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "jsCode": ""
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        688,
+        1120
+      ],
+      "id": "e1518ba9-818c-4a1f-877a-f773dad50ee1",
+      "name": "parse YAML"
+    },
+    {
+      "parameters": {
+        "jsCode": ""
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        912,
+        1120
+      ],
+      "id": "09339ec8-6306-4e73-b945-ac7f98840e26",
+      "name": "convert MJML"
+    },
+    {
+      "parameters": {
+        "jsCode": ""
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1136,
+        1120
+      ],
+      "id": "78414a49-3a06-4416-b00e-09695a9b4977",
+      "name": "convert MJML to HTML"
+    },
+    {
+      "parameters": {
+        "model": "",
+        "options": ""
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        256,
+        1360
+      ],
+      "id": "5166ae3b-ef00-4bb5-8e9a-cb2608d6588d",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "openRouterApi",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "",
+        "options": ""
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        368,
+        1360
+      ],
+      "id": "15339e92-4499-477d-97f8-8e146ef207a1",
+      "name": "OpenRouter Chat Fallback Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "openRouterApi",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": ""
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -336,
+        1120
+      ],
+      "id": "b0c87ce1-9c4b-4839-888a-334220da5734",
+      "name": "Load Repo Info"
+    },
+    {
+      "parameters": {
+        "fromEmail": "",
+        "toEmail": "",
+        "subject": "",
+        "html": "",
+        "additionalFields": ""
+      },
+      "type": "n8n-nodes-mailtrap.mailtrap",
+      "typeVersion": 1,
+      "position": [
+        1344,
+        1120
+      ],
+      "id": "d2517a65-3774-46de-b012-adbe02539913",
+      "name": "Send email",
+      "credentials": {
+        "MailtrapTokenApi": {
+          "id": "MailtrapTokenApi",
+          "name": "Mailtrap Token Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "",
+        "endpoint": "",
+        "query": "",
+        "variables": ""
+      },
+      "type": "n8n-nodes-base.graphql",
+      "typeVersion": 1.1,
+      "position": [
+        -112,
+        1120
+      ],
+      "id": "04c3ca7a-fa69-45d7-9cd4-6e28e85842e1",
+      "name": "Get Issue From Github",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "httpHeaderAuth",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "",
+        "text": "",
+        "needsFallback": "",
+        "options": ""
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        336,
+        1120
+      ],
+      "id": "9ca0496b-9938-466b-b159-164f72a2bc24",
+      "name": "Process with AI",
+      "retryOnFail": true
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Convert Markdown": {
+      "main": [
+        [
+          {
+            "node": "Process with AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Load Repo Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "parse YAML": {
+      "main": [
+        [
+          {
+            "node": "convert MJML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "convert MJML": {
+      "main": [
+        [
+          {
+            "node": "convert MJML to HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "convert MJML to HTML": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Process with AI",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Fallback Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Process with AI",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Load Repo Info": {
+      "main": [
+        [
+          {
+            "node": "Get Issue From Github",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Issue From Github": {
+      "main": [
+        [
+          {
+            "node": "Convert Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process with AI": {
+      "main": [
+        [
+          {
+            "node": "parse YAML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "600ad712-ea46-45f0-b327-d7acf7904056",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c4eb748d1201f6efcf3fb4abe55ad9f6c4623960d681ba4f9bd76fc5b7ea8d40"
+  },
+  "tags": []
+}
