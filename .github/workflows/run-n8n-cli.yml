@@ -41,14 +41,6 @@ jobs:
                     "apiKey": "${{ secrets.OPENROUTER_API_KEY }}"
                 }
               },
-             {
-                "id": "MailtrapTokenApi",
-                "name": "Mailtrap Token Api account",
-                "type": "MailtrapTokenApi",
-                "data": {
-                    "apiToken": "${{ secrets.MAILTRAP_API_TOKEN }}"
-                }
-              },
               {
                 "id": "httpHeaderAuth",
                 "name": "Header Auth account",
@@ -57,6 +49,20 @@ jobs:
                     "name": "Authorization",
                     "value": "Bearer ${{ secrets.N8N_GITHUB_API_KEY }}"
                 }
+              },
+              {
+                 "id": "smtp",
+                 "name": "SMTP account",
+                 "type": "smtp",
+                 "data": {
+                    "user": "${{ vars.EMAIL }}",
+                    "password": "${{ secrets.GOOGLE_APP_PASSWORD }}",
+                    "host": "smtp.gmail.com",
+                    "port": 465,
+                    "secure": true,
+                    "disableStartTls": false,
+                    "hostName": ""
+                  }
               }
           ] 
           EOF

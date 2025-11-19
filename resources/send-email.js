@@ -1,7 +1,7 @@
 module.exports = {
-    "fromEmail": "hello@demomailtrap.co",
+    "fromEmail": process.env.EMAIL,
     "toEmail": process.env.EMAIL,
     "subject": "Issue Report",
     "html": "={{ $json.htmlOutput.html }}",
-    "additionalFields": {}
+    "options": {}
 };
