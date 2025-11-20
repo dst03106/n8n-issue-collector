@@ -10,12 +10,12 @@ const convertMJML = function() {
         <mj-section padding="15px">
             <mj-column border="1px solid #dddddd" background-color="#FCF0D2">
                 <mj-text mj-class="section-title">📌 Quick Summary</mj-text>
-                ${createBulletedList($input.first().json.summary)}
+                ${createBulletedList($('parse YAML').first().json.summary)}
             </mj-column>
         </mj-section>`;
   
     let issues = [];
-    for (const issue of $input.first().json.issues) {
+    for (const issue of $('parse YAML').first().json.issues) {
         let issueInfo = `<mj-text mj-class="issue-title">${issue.issueTitle}</mj-text>
                         <mj-spacer/>
                         <mj-text mj-class="section-title">🧾 Issue Description</mj-text>
@@ -59,9 +59,9 @@ const convertMJML = function() {
                     <mj-section>
                         <mj-column>
                             <mj-image src="${
-$('Get Programming Humor From Reddit').first().json.data.children[0].data.preview.images[0].source.url}" width="400px"/>
+  $('Get Programming Humor From Reddit').first().json.data.children[0].data.preview.images[0].source.url}" width="400px"/>
                             <mj-text align="center" font-weight="bold" mj-class="section-content">⬆️ ${
-$('Get Programming Humor From Reddit').first().json.data.children[0].data.title}</mj-text>
+  $('Get Programming Humor From Reddit').first().json.data.children[0].data.title}</mj-text>
                         </mj-column>
                     </mj-section>
                     <mj-wrapper>
@@ -74,7 +74,7 @@ $('Get Programming Humor From Reddit').first().json.data.children[0].data.title}
                     </mj-wrapper>
             </mj-body>
             </mjml>`
-    }
+    } 
 };
 
 module.exports = {

@@ -109,7 +109,7 @@
     },
     {
       "parameters": {
-        "jsCode" : ""
+        "jsCode": ""
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
