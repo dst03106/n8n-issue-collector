@@ -1,59 +1,7 @@
 const userPrompt = `
     {{ $json.markdown_list }}
 
-    Generate a YAML object that matches the TypeScript type $IssueCollection below:
-    (You MUST wrap every YAML list item in double quotes. If the string contains a double quote ("), escape it using a backslash (\").)
-    
-    Sort the 'issues' array in descending order based on the 'issueSuitability.level', with 'high' being the highest, followed by 'medium', and then 'low'.
-
-    The summary should be a list of exactly three single sentences, where each sentence briefly highlights an issue suitable for today's contribution.
-
-    type Level = "high" | "medium" | "low";
-
-    interface LevelWithReasons {
-        level: Level;
-        reasons: string[];
-    }
-
-    interface Issue {
-        issueTitle: string;
-        issueURL: string;
-        issueDescription: string;
-        rootCause: string;
-        resolutionApproach: string[];
-        issueSuitability: LevelWithReasons;
-        technicalDifficulty: LevelWithReasons;
-    }
-
-    interface IssueCollection {
-        issues: Issue[];
-        summary: string[];
-    }
-
-    Translate all user-facing string values (issueTitle, issueDescription, rootCause, all items in reasons arrays, and all summary strings) into the language specified by ${process.env.TRANSLATION_LANGUAGE}. Do not translate the YAML keys.
-
-    ------------
-    Example output:
-    issues:
-    - issueTitle: |
-      ...
-      issueURL: "https://example.com"
-      issueDescription: |
-      ...
-      rootCause: |
-      ...
-      resolutionApproach:
-        - ".\\"...\\".."
-      issueSuitability:
-        level: "medium"
-        reasons:
-            - "..."
-      technicalDifficulty:
-        level: "high"
-        reasons:
-             - "..."
-    summary:
-      - "..."
+    Generate a YAML object from the markdown list above.
 `
 
 const systemPrompt = `
@@ -74,13 +22,14 @@ const systemPrompt = `
 
     For issues that meet the above criteria well, explain and emphasize them in detail.
     There is no need to summarize issues that do not meet the above criteria.
-
+    
     Generate a YAML object that matches the TypeScript type $IssueCollection below:
-    (You MUST wrap every YAML list item in double quotes. If the string contains a double quote ("), escape it using a backslash (\"). This rule is STRICT and cannot be violated)
-    
-    Sort the 'issues' array in descending order based on the 'issueSuitability.level', with 'high' being the highest, followed by 'medium', and then 'low'.
-    
-    The summary should be a list of single sentences, where each sentence briefly highlights an issue suitable for today's contribution.
+
+		Rules:
+    - Wrap every YAML list item in double quotes. Escape only double quotes (") inside the string with a backslash (\").
+    - The summary should be a list of exactly three single sentences, where each sentence briefly highlights an issue suitable for today's contribution.
+    - From the issues that meet the criteria, provide a minimum of 3 and a maximum of 5 of the most suitable ones.
+    - Translate all user-facing string values (issueTitle, issueDescription, rootCause, all items in reasons arrays, and all summary strings) into the language specified by ${process.env.TRANSLATION_LANGUAGE}. Do not translate the YAML keys.
 
     type Level = "high" | "medium" | "low";
 
@@ -115,7 +64,7 @@ const systemPrompt = `
       rootCause: |
       ...
       resolutionApproach:
-        - ".\\"...\\".."
+        - "It's an \\"approach1\\""
       issueSuitability:
         level: "medium"
         reasons:
@@ -123,7 +72,7 @@ const systemPrompt = `
       technicalDifficulty:
         level: "high"
         reasons:
-            - "..."
+             - "..."
     summary:
       - "..."
 `

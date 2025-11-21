@@ -15,7 +15,21 @@ const convertMJML = function() {
         </mj-section>`;
 
     let issues = [];
-    for (const issue of $('parse YAML').first().json.issues) {
+    const suitabilityOrder = { 'high': 0, 'medium': 1, 'low': 2 };
+    const difficultyOrder = { 'low': 0, 'medium': 1, 'high': 2 };
+
+    const sortedIssues = $('parse YAML').first().json.issues.sort((a, b) => {
+        const suitabilityA = suitabilityOrder[a.issueSuitability.level];
+        const suitabilityB = suitabilityOrder[b.issueSuitability.level];
+        if (suitabilityA !== suitabilityB) {
+            return suitabilityA - suitabilityB;
+        }
+        const difficultyA = difficultyOrder[a.technicalDifficulty.level];
+        const difficultyB = difficultyOrder[b.technicalDifficulty.level];
+        return difficultyA - difficultyB;
+    }).slice(0, 5);
+
+    for (const issue of sortedIssues) {
         let issueInfo = `<mj-text mj-class="issue-title">${issue.issueTitle}</mj-text>
                         <mj-spacer/>
                         <mj-text mj-class="section-title">🧾 Issue Description</mj-text>
