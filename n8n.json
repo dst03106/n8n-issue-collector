@@ -7,24 +7,10 @@
       "typeVersion": 1,
       "position": [
         -672,
-        1040
+        624
       ],
       "id": "9d915cd3-9077-4308-b9f0-b6fc759c1441",
       "name": "When clicking ‘Execute workflow’"
-    },
-    {
-      "parameters": {
-        "jsCode": "const createBulletedList = (items) => {\n      if (!Array.isArray(items) || items.length === 0) {\n          return '';\n      }\n      return items.map(item => `<mj-text mj-class=\"section-content\">• ${item}</mj-text>`).join('<br/>');\n  };\n  let latestRelease = `\n      <mj-section padding=\"15px\">\n          <mj-column border=\"3px solid #52af0f\">\n              <mj-text mj-class=\"section-title\">🚀 Latest Release (${$('IssueRank Agent').first().json.output.latestRelease.name})</mj-text>\n              <mj-text mj-class=\"section-content\">${$('IssueRank Agent').first().json.output.latestRelease.description}</mj-text>\n          </mj-column>\n      </mj-section>`;\n\n  let summary = `\n      <mj-section padding=\"15px\">\n          <mj-column border=\"3px solid #193404\">\n              <mj-text mj-class=\"section-title\">📌 Quick Summary</mj-text>\n              ${createBulletedList($('Merge').all().map(item => item.json.output.summary))}\n          </mj-column>\n      </mj-section>`;\n\n  let issues = [];\n\n  for (const issue of $('Merge').all()) {\n      let issueInfo = `<mj-text mj-class=\"issue-title\">${issue.json.issueTitle}</mj-text>\n                      <mj-spacer/>\n                      <mj-text mj-class=\"section-title\">🔑 Keywords</mj-text>\n                      <mj-text mj-class=\"section-content\">${issue.json.output.keyword.join(', ')}</mj-text>\n                      <mj-text mj-class=\"section-title\">🔄 Analogy</mj-text>\n                      <mj-text mj-class=\"section-content\">${issue.json.output.analogy}</mj-text>\n                      <mj-text mj-class=\"section-title\">🧾 Issue Description</mj-text>\n                      <mj-text mj-class=\"section-content\">${issue.json.issueDescription}</mj-text>\n                      <mj-text mj-class=\"section-title\">🧩 Root Cause</mj-text>\n                      <mj-text mj-class=\"section-content\">${issue.json.output.rootCause}</mj-text>`;\n      let resolutionApproach = `<mj-text mj-class=\"section-title\">🛠️ Resolution Approach</mj-text><mj-text font-size=\"14px\" line-height=\"1.6\">`;\n      resolutionApproach += createBulletedList(issue.json.output.resolutionApproach);\n      resolutionApproach += '</mj-text>';\n\n      \n      let issueSuitability = `<mj-text mj-class=\"section-title\">✅ Issue Suitability: ${issue.json.issueSuitability.level}</mj-text><mj-text font-size=\"14px\" line-height=\"1.6\">`\n      issueSuitability += createBulletedList(issue.json.issueSuitability.reasons);\n      issueSuitability += '</mj-text>';\n      \n      let technicalDifficulty = `<mj-text mj-class=\"section-title\">🧗 Technical Difficulty: ${issue.json.output.technicalDifficulty.level}</mj-text><mj-text font-size=\"14px\" line-height=\"1.6\">`\n      technicalDifficulty += createBulletedList(issue.json.output.technicalDifficulty.reasons);\n      technicalDifficulty += '</mj-text>';\n\n      let issuelink = `<mj-text mj-class=\"section-title\"><p>👉 Go to Issue <a href=\"${issue.json.issueURL}\">(Link)</a></p></mj-text>`;\n      let deepwikiLink = `<mj-text mj-class=\"section-title\"><p>🌀 Go to Deepwiki search result <a href=\"${issue.json.output.deepwikiLink}\">(Link)</a></p></mj-text>`;\n\n      issues.push(issueInfo + resolutionApproach + issueSuitability + technicalDifficulty + issuelink + deepwikiLink)\n  }\n\n  return {\n      issueHTML: `\n          <mjml>\n            <mj-head>\n                  <mj-attributes>\n                      <mj-class name=\"issue-title\" font-size=\"22px\" />\n                      <mj-class name=\"section-title\" font-size=\"15px\" font-weight=\"bold\"/>\n                      <mj-class name=\"section-content\" font-size=\"14px\" line-height=\"1.6\"/>\n                  </mj-attributes>\n              </mj-head>\n              <mj-body>\n                  <mj-section>\n                      <mj-column>\n                          <mj-image src=\"https://lh3.googleusercontent.com/d/1bveO7WYcxDDMgPJGCKniHpxKWUJkgDqf\" width=\"1000\" height=\"150\"/>\n                      </mj-column>\n                  </mj-section>\n                  <mj-divider  border-width=\"1px\" border-color=\"#D3D3D3\"/> \n                  <mj-wrapper>\n                      ${latestRelease}\n                      ${summary}\n                      <mj-section>\n                          <mj-column>\n                              ${issues.join(`<mj-divider  border-width=\"1px\" border-color=\"#D3D3D3\"/>`)}\n                          </mj-column>\n                      </mj-section>\n                  </mj-wrapper>\n          </mj-body>\n          </mjml>`\n  }"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        2048,
-        1040
-      ],
-      "id": "09339ec8-6306-4e73-b945-ac7f98840e26",
-      "name": "convert MJML",
-      "executeOnce": true
     },
     {
       "parameters": {
@@ -33,11 +19,12 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2272,
-        1040
+        2640,
+        624
       ],
       "id": "78414a49-3a06-4416-b00e-09695a9b4977",
-      "name": "convert MJML to HTML"
+      "name": "convert MJML to HTML",
+      "executeOnce": false
     },
     {
       "parameters": {
@@ -47,7 +34,7 @@
       "typeVersion": 2,
       "position": [
         -448,
-        1040
+        624
       ],
       "id": "b0c87ce1-9c4b-4839-888a-334220da5734",
       "name": "Load Repo Info"
@@ -63,7 +50,7 @@
       "typeVersion": 1.1,
       "position": [
         -224,
-        1040
+        624
       ],
       "id": "04c3ca7a-fa69-45d7-9cd4-6e28e85842e1",
       "name": "Get Issue From Github",
@@ -76,30 +63,6 @@
     },
     {
       "parameters": {
-        "fromEmail": "",
-        "toEmail": "",
-        "subject": "Issue Report",
-        "html": "={{ $json.htmlOutput.html }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.emailSend",
-      "typeVersion": 2.1,
-      "position": [
-        2496,
-        1040
-      ],
-      "id": "4fbe9184-c329-4691-9fcc-3061aaecdf57",
-      "name": "Send email",
-      "webhookId": "d1108327-f642-465e-81a5-bb8e25098f9f",
-      "credentials": {
-        "smtp": {
-          "id": "smtp",
-          "name": "SMTP account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "fieldToSplitOut": "issues",
         "options": {}
       },
@@ -107,7 +70,7 @@
       "typeVersion": 1,
       "position": [
         848,
-        1040
+        800
       ],
       "id": "789e9515-c002-4b86-a0c6-d009e2ec4ef9",
       "name": "Split Out"
@@ -120,7 +83,7 @@
       "typeVersion": 2,
       "position": [
         624,
-        1040
+        624
       ],
       "id": "e1518ba9-818c-4a1f-877a-f773dad50ee1",
       "name": "get Top Fit Issues",
@@ -144,8 +107,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        1824,
-        1040
+        1920,
+        800
       ],
       "id": "3806efab-6ad2-4372-959d-27571ae3b39a",
       "name": "Merge",
@@ -165,7 +128,7 @@
       "typeVersion": 3,
       "position": [
         32,
-        1040
+        624
       ],
       "id": "9ca0496b-9938-466b-b159-164f72a2bc24",
       "name": "IssueRank Agent",
@@ -181,7 +144,7 @@
       "typeVersion": 1,
       "position": [
         0,
-        1264
+        848
       ],
       "id": "5166ae3b-ef00-4bb5-8e9a-cb2608d6588d",
       "name": "IssueRank Main Model",
@@ -201,7 +164,7 @@
       "typeVersion": 1,
       "position": [
         128,
-        1264
+        848
       ],
       "id": "15339e92-4499-477d-97f8-8e146ef207a1",
       "name": "IssueRank Fallback Model",
@@ -230,7 +193,7 @@
       "typeVersion": 3,
       "position": [
         1168,
-        864
+        624
       ],
       "id": "400b0a2c-d82c-4cd3-988b-d47df2f42dd2",
       "name": "Deepwiki Agent",
@@ -246,7 +209,7 @@
       "typeVersion": 1,
       "position": [
         1072,
-        1088
+        848
       ],
       "id": "868b5398-c429-41a7-91c3-47055b23355b",
       "name": "Deepwiki Main Model",
@@ -266,7 +229,7 @@
       "typeVersion": 1,
       "position": [
         1200,
-        1088
+        848
       ],
       "id": "abdf1ee4-3730-4e09-84ad-fdc14673b813",
       "name": "Deepwiki Fallback Model",
@@ -289,7 +252,7 @@
       "typeVersion": 1.2,
       "position": [
         1328,
-        1088
+        848
       ],
       "id": "467ce14b-5484-4e57-a822-19943906811a",
       "name": "Deepwiki MCP"
@@ -304,7 +267,7 @@
       "typeVersion": 1.3,
       "position": [
         256,
-        1264
+        848
       ],
       "id": "c5239797-e121-45bc-bed0-eba9b9639bd2",
       "name": "IssueRank Structured Output Parser"
@@ -319,7 +282,7 @@
       "typeVersion": 1.3,
       "position": [
         1456,
-        1088
+        848
       ],
       "id": "964ac76b-b135-4dbf-bb31-0c1fc0db9692",
       "name": "Deepwiki Structured Output Parser"
@@ -333,7 +296,7 @@
       "typeVersion": 1,
       "position": [
         336,
-        1472
+        1056
       ],
       "id": "64a6e9e2-a0da-42b0-a77a-e29ec2abb66f",
       "name": "IssueRank Parser Model",
@@ -353,7 +316,7 @@
       "typeVersion": 1,
       "position": [
         1536,
-        1296
+        1056
       ],
       "id": "9b183a12-2934-4f20-8e75-e91964bc08a1",
       "name": "Deepwiki Parser Model",
@@ -361,6 +324,121 @@
         "openRouterApi": {
           "id": "openRouterApi",
           "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "=define",
+        "text": "=\n\tI want you to create a newsletter title for the issue below.\n\n\t### Issue\n\t{{ $json.issues[0].toJsonString() }}\n\n\tOutput:\n",
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "=\n\tYou are an AI assistant that creates a newsletter title based on a GitHub issue.\n\n\tInstructions:\n\t1. Read the provided GitHub issue.\n\t2. Generate a short, catchy, and clickbait-style newsletter title.\n\t3. The title MUST meet the following criteria:\n\t\t- It must include a relevant emoji at the beginning.\n\t\t- It must be easily understandable for a non-technical audience.\n\t\t- It must be fun and intriguing to maximize open rates.\n\t4. Translate the final title into the language specified by ko-KR. Do not translate the emoji.\n\n\tRules:\n\t- The output should be a single line of text containing only the title.\n\t- Do not include any other text, explanations, or markdown.\n\n\t------------\n\tExample (if target language is English):\n\t✨ Don't Miss Out! Your Weekly Dose of Awesome Insights.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        1824,
+        272
+      ],
+      "id": "d7b89cd9-1042-4258-9552-eaa2928614a6",
+      "name": "Title Generator Agent",
+      "retryOnFail": true,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "model": "x-ai/grok-4.1-fast:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        496
+      ],
+      "id": "88820e38-9e91-47f4-a631-416ced1d7546",
+      "name": "Title Generator Main Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "openRouterApi",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "qwen/qwen3-coder:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1872,
+        512
+      ],
+      "id": "47db7cf3-d55a-443b-a294-853be2082a17",
+      "name": "Title Generator Fallback Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "openRouterApi",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2224,
+        624
+      ],
+      "id": "213c6ac0-0db0-4c2d-9d64-78c9715bfce0",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const createBulletedList = (items) => {\n      if (!Array.isArray(items) || items.length === 0) {\n          return '';\n      }\n      return items.map(item => `<mj-text mj-class=\"section-content\">• ${item}</mj-text>`).join('<br/>');\n  };\n  let latestRelease = `\n      <mj-section padding=\"15px\">\n          <mj-column border=\"3px solid #52af0f\">\n              <mj-text mj-class=\"section-title\">🚀 Latest Release (${$('IssueRank Agent').first().json.output.latestRelease.name})</mj-text>\n              <mj-text mj-class=\"section-content\">${$('IssueRank Agent').first().json.output.latestRelease.description}</mj-text>\n          </mj-column>\n      </mj-section>`;\n\n  let summary = `\n      <mj-section padding=\"15px\">\n          <mj-column border=\"3px solid #193404\">\n              <mj-text mj-class=\"section-title\">📌 Quick Summary</mj-text>\n              ${createBulletedList($('Merge').all().map(item => item.json.output.summary))}\n          </mj-column>\n      </mj-section>`;\n\n  let issues = [];\n\n  for (const issue of $('Merge').all()) {\n      let issueInfo = `<mj-text mj-class=\"issue-title\">${issue.json.issueTitle}</mj-text>\n                      <mj-spacer/>\n                      <mj-text mj-class=\"section-title\">🔑 Keywords</mj-text>\n                      <mj-text mj-class=\"section-content\">${issue.json.output.keyword.join(', ')}</mj-text>\n                      <mj-text mj-class=\"section-title\">🔄 Analogy</mj-text>\n                      <mj-text mj-class=\"section-content\">${issue.json.output.analogy}</mj-text>\n                      <mj-text mj-class=\"section-title\">🧾 Issue Description</mj-text>\n                      <mj-text mj-class=\"section-content\">${issue.json.issueDescription}</mj-text>\n                      <mj-text mj-class=\"section-title\">🧩 Root Cause</mj-text>\n                      <mj-text mj-class=\"section-content\">${issue.json.output.rootCause}</mj-text>`;\n      let resolutionApproach = `<mj-text mj-class=\"section-title\">🛠️ Resolution Approach</mj-text><mj-text font-size=\"14px\" line-height=\"1.6\">`;\n      resolutionApproach += createBulletedList(issue.json.output.resolutionApproach);\n      resolutionApproach += '</mj-text>';\n\n      \n      let issueSuitability = `<mj-text mj-class=\"section-title\">✅ Issue Suitability: ${issue.json.issueSuitability.level}</mj-text><mj-text font-size=\"14px\" line-height=\"1.6\">`\n      issueSuitability += createBulletedList(issue.json.issueSuitability.reasons);\n      issueSuitability += '</mj-text>';\n      \n      let technicalDifficulty = `<mj-text mj-class=\"section-title\">🧗 Technical Difficulty: ${issue.json.output.technicalDifficulty.level}</mj-text><mj-text font-size=\"14px\" line-height=\"1.6\">`\n      technicalDifficulty += createBulletedList(issue.json.output.technicalDifficulty.reasons);\n      technicalDifficulty += '</mj-text>';\n\n      let issuelink = `<mj-text mj-class=\"section-title\"><p>👉 Go to Issue <a href=\"${issue.json.issueURL}\">(Link)</a></p></mj-text>`;\n      let deepwikiLink = `<mj-text mj-class=\"section-title\"><p>🌀 Go to Deepwiki search result <a href=\"${issue.json.output.deepwikiLink}\">(Link)</a></p></mj-text>`;\n\n      issues.push(issueInfo + resolutionApproach + issueSuitability + technicalDifficulty + issuelink + deepwikiLink)\n  }\n\n  return {\n      issueHTML: `\n          <mjml>\n            <mj-head>\n                  <mj-attributes>\n                      <mj-class name=\"issue-title\" font-size=\"22px\" />\n                      <mj-class name=\"section-title\" font-size=\"15px\" font-weight=\"bold\"/>\n                      <mj-class name=\"section-content\" font-size=\"14px\" line-height=\"1.6\"/>\n                  </mj-attributes>\n              </mj-head>\n              <mj-body>\n                  <mj-section>\n                      <mj-column>\n                          <mj-image src=\"https://lh3.googleusercontent.com/d/1VYyXuiNQOnHCBELXh4_6ZDEoL30x7OQk\" width=\"1000\" height=\"150\"/>\n                      </mj-column>\n                  </mj-section>\n                  <mj-divider  border-width=\"1px\" border-color=\"#D3D3D3\"/> \n                  <mj-wrapper>\n                      ${latestRelease}\n                      ${summary}\n                      <mj-section>\n                          <mj-column>\n                              ${issues.join(`<mj-divider  border-width=\"1px\" border-color=\"#D3D3D3\"/>`)}\n                          </mj-column>\n                      </mj-section>\n                  </mj-wrapper>\n          </mj-body>\n          </mjml>`\n  }"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2448,
+        624
+      ],
+      "id": "09339ec8-6306-4e73-b945-ac7f98840e26",
+      "name": "convert MJML",
+      "executeOnce": false,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "fromEmail": "",
+        "toEmail": "",
+        "subject": "[Issue Report] {{ $('Load Repo Info').item.json.owner }}/{{ $('Load Repo Info').item.json.name }} - {{ $('Title Generator Agent').item.json.output }}",
+        "html": "{{ $('convert MJML to HTML').item.json.htmlOutput.html }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        2896,
+        624
+      ],
+      "id": "4fbe9184-c329-4691-9fcc-3061aaecdf57",
+      "name": "Send email",
+      "webhookId": "d1108327-f642-465e-81a5-bb8e25098f9f",
+      "executeOnce": false,
+      "credentials": {
+        "smtp": {
+          "id": "smtp",
+          "name": "SMTP account"
         }
       }
     }
@@ -372,17 +450,6 @@
         [
           {
             "node": "Load Repo Info",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "convert MJML": {
-      "main": [
-        [
-          {
-            "node": "convert MJML to HTML",
             "type": "main",
             "index": 0
           }
@@ -445,6 +512,11 @@
             "node": "Split Out",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Title Generator Agent",
+            "type": "main",
+            "index": 0
           }
         ],
         []
@@ -454,9 +526,9 @@
       "main": [
         [
           {
-            "node": "convert MJML",
+            "node": "Merge1",
             "type": "main",
-            "index": 0
+            "index": 1
           }
         ]
       ]
@@ -581,13 +653,68 @@
           }
         ]
       ]
+    },
+    "Title Generator Agent": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Title Generator Main Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Title Generator Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Title Generator Fallback Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Title Generator Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "convert MJML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "convert MJML": {
+      "main": [
+        [
+          {
+            "node": "convert MJML to HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "fdfb4e0a-67a1-4fa7-94fa-736314b60f1c",
+  "versionId": "6d017900-9ac1-48b3-ae24-c7d08128c49a",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "c4eb748d1201f6efcf3fb4abe55ad9f6c4623960d681ba4f9bd76fc5b7ea8d40"
