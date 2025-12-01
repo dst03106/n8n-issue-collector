@@ -22,7 +22,7 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        run: npm ci && cd community_nodes && npm ci
+        run: npm ci
 
       - name: Run workflow
         env:
@@ -71,7 +71,6 @@ jobs:
           EOF
           npx n8n import:credentials --input="cred.json"
           node scripts/build-workflow.js n8n.json
-          ln -sf $PWD/community_nodes ~/.n8n/nodes
           npx n8n import:workflow --input="./dist/workflow.json"
           WORKFLOW_ID=$(sqlite3 ~/.n8n/database.sqlite "SELECT id FROM workflow_entity ORDER BY createdAt DESC LIMIT 1;")
           npx n8n execute workflow --id $WORKFLOW_ID
